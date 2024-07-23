@@ -27,7 +27,7 @@ To make sure that your Docker CLI is now configured to use the Docker daemon ins
 ```
 docker info | grep -i "name:"
 ```
-If the command returns Name: minikube, it confirms that the Docker daemon is running inside the Minikube VM.
+If the command returns `Name: minikube`, it confirms that the Docker daemon is running inside the Minikube VM.
 
 
 3. Build your Docker image
@@ -42,7 +42,7 @@ After building the image, verify that it was built inside your Minikube environm
 ```
 docker images
 ```
-You should see gprocida6g/print-secrets:1.0 in the list of images.
+You should see gprocida6g/gprocida6g/objects-printer:1.0 in the list of images.
 
 
 If you wish to delete a Docker image, you can use the following command:
@@ -51,10 +51,10 @@ If you wish to delete a Docker image, you can use the following command:
 docker rmi <image-name> or <image-id>
 ```
 
-For example, to delete the image gprocida6g/print-secrets:1.0, you can run:
+For example, to delete the image gprocida6g/objects-printer:1.0, you can run:
 
 ```
-docker rmi gprocida6g/print-secrets:1.0
+docker rmi gprocida6g/gprocida6g/objects-printer:1.0
 ```
 
 
