@@ -30,7 +30,7 @@ docker info | grep -i "name:"
 If the command returns `Name: minikube`, it confirms that the Docker daemon is running inside the Minikube VM.
 
 
-3. Build your Docker image
+3. Build your Docker image.<br />
 Navigate go to the directory containing your Dockerfile and build your Docker image. using the provided Dockerfile:
 ```
 docker build -t gprocida6g/print-secrets:1.0 .
