@@ -27,14 +27,34 @@ To make sure that your Docker CLI is now configured to use the Docker daemon ins
 ```
 docker info | grep -i "name:"
 ```
-If the commands runs okay, it confirms that Docker daemon is running inside the Minikube VM.
-
+If the command returns Name: minikube, it confirms that the Docker daemon is running inside the Minikube VM.
 
 
 3. Build your Docker image
 Navigate go to the directory containing your Dockerfile and build your Docker image. using the provided Dockerfile:
 ```
 docker build -t gprocida6g/print-secrets:1.0 .
+```
+
+4. Verify the Docker Image
+After building the image, verify that it was built inside your Minikube environment by listing the Docker images:
+
+```
+docker images
+```
+You should see gprocida6g/print-secrets:1.0 in the list of images.
+
+
+If you wish to delete a Docker image, you can use the following command:
+
+```
+docker rmi <image-name> or <image-id>
+```
+
+For example, to delete the image gprocida6g/print-secrets:1.0, you can run:
+
+```
+docker rmi gprocida6g/print-secrets:1.0
 ```
 
 
@@ -60,8 +80,7 @@ kubectl apply -f my-role.yaml
 ```
 
 
-## Create a rolebinding resource that binds the pod-listing-role to the default ServiceAccount
-
+## Create a Rolebinding resource ## 
 Use an imperative command:
 
 ```
@@ -101,6 +120,14 @@ within the 'containers' field
 
 
 
+
+
+
+
+
+### other useful command:
+
+docker rmi gprocida6g/print-pods:1.0 (if you wish to update the image you need first to delete the image and then build it again)
 
 
 
