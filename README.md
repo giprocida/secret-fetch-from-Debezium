@@ -30,14 +30,12 @@ docker info | grep -i "name:"
 If the command returns `Name: minikube`, it confirms that the Docker daemon is running inside the Minikube VM.
 
 
-3. Build your Docker image.<br />
-Navigate go to the directory containing your Dockerfile and build your Docker image. using the provided Dockerfile:
+3. Build your Docker image. Navigate go to the directory containing your Dockerfile and build your Docker image. using the provided Dockerfile:
 ```
 docker build -t gprocida6g/print-secrets:1.0 .
 ```
 
-4. Verify the Docker Image
-After building the image, verify that it was built inside your Minikube environment by listing the Docker images:
+4. Verify the Docker Image. After building the image, verify that it was built inside your Minikube environment by listing the Docker images:
 
 ```
 docker images
@@ -54,7 +52,7 @@ docker rmi <image-name> or <image-id>
 For example, to delete the image gprocida6g/objects-printer:1.0, you can run:
 
 ```
-docker rmi gprocida6g/gprocida6g/objects-printer:1.0
+docker rmi gprocida6g/objects-printer:1.0
 ```
 
 
@@ -68,19 +66,17 @@ kubectl create role pod-listing-role \
   --resource=pods,secrets \
   --namespace=kafka \
   --dry-run=client -o yaml > my-role.yaml
-
 ```
 
-Or just use the provided `my-role.yaml` file 
-
-The Role defined in the `my-role.yaml` file grants permissions to perform get and list operations on the pods and secrets resources within the `debezium-example` namespace. 
-This means any ServiceAccount, User, or Group that this Role is bound to can view and list the pods and secrets in that namespace. Apply the role:
+Or just use the provided `my-role.yaml` file. <br />
+The Role defined in the `my-role.yaml` file grants permissions to perform get and list operations on the pods and secrets resources within the `debezium-example` namespace. This means any ServiceAccount, User, or Group that this Role is bound to can view and list the pods and secrets in that namespace. Apply the Role:
 ```
 kubectl apply -f my-role.yaml
 ```
 
 
 ## Create a Rolebinding resource ## 
+
 Use an imperative command:
 
 ```
@@ -90,15 +86,10 @@ kubectl create rolebinding pod-listing-binding \
   --dry-run=client \
   --namespace=kafka \
   -o yaml > my-role-binding.yaml
-
 ```
 
-or just use the provided `my-role-binding.yaml` file. 
-
-
-
-The RoleBinding defined in the file `my-role-binding.yaml` grants the permissions defined in the `pod-listing-role` Role to the default ServiceAccount in the debezium-example namespace.
-This means that the default ServiceAccount in the debezium-example namespace will have the permissions to get and list pods and secrets within that namespace. Apply the role:
+or just use the provided `my-role-binding.yaml` file. <br />
+The RoleBinding defined in the file `my-role-binding.yaml` grants the permissions defined in the `pod-listing-role` Role to the default ServiceAccount in the debezium-example namespace. This means that the default ServiceAccount in the debezium-example namespace will have the permissions to get and list pods and secrets within that namespace. Apply the RoleBinding:
 ```
 kubectl apply -f my-role-binding.yaml
 ```
