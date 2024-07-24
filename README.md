@@ -1,9 +1,12 @@
 ## Project Overview ##
 
-This project demonstrates how to easily deploy Debezium on Kubernetes using Minikube.
-Also, to give a better taste of Kubernetes resources like Service Account, Role and RoleBinding this project shows what those resources are for and what do they do in practical termes. The deployment, which will be the application that are granting permission thanks to the previously mentioned resources, or simply prints all the containers for each pod and all the  secrets from the `debezium-example` namespace where Debezium resides. 
 
+
+This project demonstrates how to easily deploy `Debezium` on Kubernetes using Minikube. Additionally, to provide a practical understanding of Kubernetes resources like ServiceAccount, Role, and RoleBinding, this project explains their purposes and showcases their functionality.
+
+The deployment, which utilizes the permissions defined in the `Role` object, prints all the containers for each pod and all the secrets from the `debezium-example` namespace where Debezium resides.
 Before we start, let's first highlight some key differences between Kubernetes running on Docker Desktop and Kubernetes running on Minikube.
+
 
 
 ### Overview: How Minikube and Kubernetes on Docker Desktop Work ###
@@ -16,7 +19,6 @@ In terms of networking, the Minikube VM/container has its own network configurat
 
 Minikube offers flexibility and is closer to production setups but requires manual configuration for network access and image management.
 
-### Kubernetes on Docker Desktop ####
 
 #### Kubernetes on Docker Desktop ####
 
