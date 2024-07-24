@@ -9,16 +9,17 @@ It prints the secret for each pod running in that namespace. This project is int
 #### Minikube ####
 Minikube is designed to run a local Kubernetes cluster on your machine for development and testing. It creates a VM (or uses a container) to run the Kubernetes cluster, and this VM/container runs its own Docker daemon, isolated from your host machine’s Docker daemon. You start Minikube using a command, choosing a VM driver (like VirtualBox) or a container driver (like Docker). For example, you might use minikube start.
 
-In terms of networking, the Minikube VM/container has its own network configuration. Services are not accessible from localhost by default; you need to use commands like minikube service to access them or find the Minikube IP and NodePort. For example, you can access a service using minikube service <service-name> or curl http://<Minikube-IP>:<NodePort>. To use Docker images with Minikube, you need to build them inside Minikube’s Docker environment by pointing your shell to Minikube’s Docker daemon, using a command like eval $(minikube docker-env).
+In terms of networking, the Minikube VM/container has its own network configuration. Services are not accessible from localhost by default; you need to use commands like minikube service to access them or find the Minikube IP and NodePort. For example, you can access a service using `minikube service service-name`. Take a look at the [Minikube documentation](https://minikube.sigs.k8s.io/docs/handbook/accessing/) for more insights.  To use Docker images with Minikube, you need to build them inside Minikube’s Docker environment by pointing your shell to Minikube’s Docker daemon, using a command like eval $(minikube docker-env). Take a look at the [Minikube documentation](https://minikube.sigs.k8s.io/docs/tutorials/docker_desktop_replacement/#steps) for more insights.
 
 Minikube offers flexibility and is closer to production setups but requires manual configuration for network access and image management.
 
+### Kubernetes on Docker Desktop ####
+
 #### Kubernetes on Docker Desktop ####
 
-Kubernetes on Docker Desktop
 Docker Desktop integrates Kubernetes to provide an easy-to-use local Kubernetes environment for development. It runs a lightweight VM to host the Docker daemon and Kubernetes components, and both Docker and Kubernetes share the same Docker daemon, simplifying image management. Kubernetes can be enabled through Docker Desktop settings with a simple toggle, and the Kubernetes components are managed within the same VM used by Docker.
 
-In terms of networking, Docker Desktop provides seamless network integration, making services accessible via localhost and the host’s IP address. For example, you can access a service using curl http://localhost:<NodePort>. Docker images built on your host machine are immediately available to the Kubernetes cluster without additional configuration, and you can build an image using a command like docker build -t my-image:latest ..
+In terms of networking, Docker Desktop provides seamless network integration, making services accessible via localhost and the host’s IP address. For example, you can access a service using `curl http://localhost:NodePort.` Docker images built on your host machine are immediately available to the Kubernetes cluster without additional configuration, and you can build an image using a command like `docker build -t my-image:latest .`.
 
 Docker Desktop simplifies development with a unified Docker and Kubernetes environment, providing seamless network access and a shared Docker daemon.
 
