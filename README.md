@@ -36,15 +36,81 @@ Docker Desktop simplifies development with a unified Docker and Kubernetes envir
 
 
 ## Deploying Debezium on Minikube ##
+This guide complements the official Debezium documentation by highlighting key steps and providing additional resources to help you avoid common issues. Follow the [Debezium documentation](https://debezium.io/documentation/reference/stable/operations/kubernetes.html) as the primary source for deploying Debezium on Minikube.
 
-1. Set up an unsecure container image registry on minikube. To do so, you need start minikube with the --insecure-registry flag:
 
-```
-minikube start --insecure-registry "10.0.0.0/24
-```
- This command starts a Minikube cluster and configures Docker to allow communication with a Docker registry within the specified IP range without requiring HTTPS
+Kubernetes files to deploy:
 
-2. 
+1. A Secret called `debezium-secret` containing base64-encoded credentials for connecting to the MySQL database.
+
+2. A Role called `connector-configuration-role` which grants read access to a specific Kubernetes Secret named `debezium-secret` within the `debezium-example` namespace.
+
+3. A RoleBinding called `connector-configuration-role-binding` which binds the Role to the Kafka Connect cluster service account.
+
+4. A Deployment called `mysql` for deploying a MySQL database.
+
+5. A service called `mysql`. 
+
+
+Custom Resources using Strimzi Kafka CRD:
+
+1. Kafka which deploys the Kafka cluster
+
+2. KafkaConnect which deploys the Kafka Connect cluster with the necessary plugins.
+
+3. KafkaConnector which configures the connector for capturing changes from MySQL and streaming them to Kafka.
+
+
+#### Important Notes ####
+Issue with Shell Commands: When creating the KafkaConnector using shell commands, you may encounter issues with reading database credentials. It is recommended to store the YAML configuration in a file and apply it using kubectl apply -f ....
+Additional Help: For more information, refer to this Stack Overflow post for troubleshooting [KafkaConnector not reaading database credentials](https://stackoverflow.com/questions/75831703/strimzi-kafkaconnector-not-reading-database-credentials-from-secrets).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Follow this [Debezium documentation](https://debezium.io/documentation/reference/stable/operations/kubernetes.html) for deploying Debezium on Minikube in combinatior of the yaml files and other info written here. All the object resources that are used in the documentation are already in this repoo ready for use so you won t have to copy paste anything you will only need to replace the IP address present in the `debezium-kafka-connector.yaml` file with the IP address of the registry where you can push and pull. 
+
+
+ps: . This is because you will probably get into some issues when running creating the KafkaConnector using the shell (see Creating a Debezium Connector), you will probably run into some issues if are following the documentation . check here for more info 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Run the deployment on minikube ##
 
