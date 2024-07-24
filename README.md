@@ -7,7 +7,12 @@ This project demonstrates how to easily deploy `Debezium` on Kubernetes using Mi
 The deployment, which utilizes the permissions defined in the `Role` object, prints all the containers for each pod and all the secrets from the `debezium-example` namespace where Debezium resides.
 Before we start, let's first highlight some key differences between Kubernetes running on Docker Desktop and Kubernetes running on Minikube.
 
+## Prerequisites ##
 
+
+1. Docker Desktop installed and Kubernetes enabled.
+2. Minikube installed.
+3. kubectl installed and configured to interact with both environments.
 
 ### Overview: How Minikube and Kubernetes on Docker Desktop Work ###
 
@@ -29,6 +34,17 @@ In terms of networking, Docker Desktop provides seamless network integration, ma
 Docker Desktop simplifies development with a unified Docker and Kubernetes environment, providing seamless network access and a shared Docker daemon.
 
 
+
+## Deploying Debezium on Minikube ##
+
+1. Set up an unsecure container image registry on minikube. To do so, you need start minikube with the --insecure-registry flag:
+
+```
+minikube start --insecure-registry "10.0.0.0/24
+```
+ This command starts a Minikube cluster and configures Docker to allow communication with a Docker registry within the specified IP range without requiring HTTPS
+
+2. 
 
 ## Run the deployment on minikube ##
 
