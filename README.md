@@ -1,7 +1,10 @@
 ## Project Overview ##
 
-This project demonstrates how to create a Deployment in Kubernetes and authorize it to access secrets from the `debezium-example` namespace where Debezium resides. 
-It prints the secret for each pod running in that namespace. This project is intended for educational purposes to explore the functionality of the Kubernetes library in Python. Before we start, let's first highlight some key differences between Kubernetes running on Docker Desktop and Kubernetes running on Minikube.
+This project demonstrates how to easily deploy Debezium on Kubernetes using Minikube.
+Also, to give a better taste of Kubernetes resources like Service Account, Role and RoleBinding this project shows what those resources are for and what do they do in practical termes. The deployment, which will be the application that are granting permission thanks to the previously mentioned resources, or simply prints all the containers for each pod and all the  secrets from the `debezium-example` namespace where Debezium resides. 
+
+Before we start, let's first highlight some key differences between Kubernetes running on Docker Desktop and Kubernetes running on Minikube.
+
 
 ### Overview: How Minikube and Kubernetes on Docker Desktop Work ###
 
