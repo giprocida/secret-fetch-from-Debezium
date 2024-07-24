@@ -10,9 +10,9 @@ Before we start, let's first highlight some key differences between Kubernetes r
 ## Prerequisites ##
 
 
-1. Docker Desktop installed and Kubernetes enabled.
-2. Minikube installed.
-3. kubectl installed and configured to interact with both environments.
+* Docker Desktop installed and Kubernetes enabled.
+* Minikube installed.
+* kubectl installed and configured to interact with both environments.
 
 ### Overview: How Minikube and Kubernetes on Docker Desktop Work ###
 
