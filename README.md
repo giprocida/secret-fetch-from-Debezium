@@ -3,6 +3,20 @@
 This project demonstrates how to create a Deployment in Kubernetes and authorize it to access secrets from the `debezium-example` namespace where Debezium resides. 
 It prints the secret for each pod running in that namespace. This project is intended for educational purposes to explore the functionality of the Kubernetes library in Python.
 
+## Overview: How Minikube and Kubernetes on Docker Desktop Work ##
+
+
+# Minikube #
+Minikube is designed to run a local Kubernetes cluster on your machine for development and testing. It creates a VM (or uses a container) to run the Kubernetes cluster, and this VM/container runs its own Docker daemon, isolated from your host machine’s Docker daemon. You start Minikube using a command, choosing a VM driver (like VirtualBox) or a container driver (like Docker). For example, you might use minikube start.
+
+In terms of networking, the Minikube VM/container has its own network configuration. Services are not accessible from localhost by default; you need to use commands like minikube service to access them or find the Minikube IP and NodePort. For example, you can access a service using minikube service <service-name> or curl http://<Minikube-IP>:<NodePort>. To use Docker images with Minikube, you need to build them inside Minikube’s Docker environment by pointing your shell to Minikube’s Docker daemon, using a command like eval $(minikube docker-env).
+
+Minikube offers flexibility and is closer to production setups but requires manual configuration for network access and image management.
+
+
+
+
+
 ## Run the deployment on minikube ##
 
 Follow these steps:
@@ -40,7 +54,7 @@ docker build -t gprocida6g/print-secrets:1.0 .
 ```
 docker images
 ```
-You should see gprocida6g/objects-printer:1.0 in the list of images.
+You should see `gprocida6g/objects-printer:1.0` in the list of images.
 
 
 If you wish to delete a Docker image, you can use the following command:
