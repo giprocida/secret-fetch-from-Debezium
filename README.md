@@ -2,9 +2,7 @@
 
 
 
-This project demonstrates how to easily deploy `Debezium` and `Kafka` on Kubernetes using Minikube. Additionally, to provide a practical understanding of Kubernetes resources like ServiceAccount, Role, and RoleBinding, this project explains their purposes and showcases their functionality.
-
-The deployment, which utilizes the permissions defined in the `Role` object, prints all the containers for each pod and all the secrets from the `debezium-example` namespace where Debezium resides.
+This project demonstrates how to easily deploy `Debezium` and `Kafka` on Kubernetes using Minikube.
 Before we start, let's first highlight some key differences between Kubernetes running on Docker Desktop and Kubernetes running on Minikube.
 
 ## Prerequisites ##
@@ -14,7 +12,7 @@ Before we start, let's first highlight some key differences between Kubernetes r
 * Minikube installed.
 * kubectl installed and configured to interact with both environments.
 
-### Overview: How Minikube and Kubernetes on Docker Desktop Work ###
+### Minikube vs Kubernetes on Docker Desktop ###
 
 
 #### Minikube ####
@@ -93,7 +91,7 @@ kubectl get crds | grep strimzi | awk '{print $1}' | xargs kubectl delete crd
 ### Configuring Minikube's Docker Daemon and Managing Docker Images ###
 
 This sections provides a practical understanding of Kubernetes resources like `ServiceAccount`, `Role`, and `RoleBinding`. 
-Follow the steps to deploy the application:
+Follow the steps:
 
 1. Configure your shell to use Minikube's Docker daemon. 
 Minikube has its own Docker daemon. To build Docker images directly within Minikube, you need to point your shell to 
@@ -182,139 +180,27 @@ kubectl apply -f my-role-binding.yaml
 ```
 
 
+**Create the pod**
 
-**Create the deployment**
-
-kubectl create deploy print-secrets \
-  --image=gprocida6g/print-secrets:1.0 \
-  --namespace=debezium-example\
-  --dry-run=client -o yaml > print-secrets.yaml
-
-
-
-Now, modify the deployment configuration by adding `imagePullPolicy: Never` that will instruct the kubelet to never pull the container image from the registry. This means that Kubernetes will only use the image if it is already present on the node where the pod is scheduled.
-
-
-
-
-
-
-
-
-
-
-### other useful command:
-
-docker rmi gprocida6g/print-pods:1.0 (if you wish to update the image you need first to delete the image and then build it again)
-
-
-
-
-
-
-
-# Apply all the newly created resources.
-
-
-
-
-
-You could push the image to your Docker Hub or use the field imagePullPolicy: Never (image 
-already present locally).
-
-
-# Create a role resource named 'pod-listing-role' with specific permission
-
-kubectl create role pod-listing-role \
-  --verb=get,list \
-  --resource=pods,secrets \
-  --namespace=kafka \
-  --dry-run=client -o yaml > my-role.yaml
-
-
-## Create a rolebinding resource that binds the pod-listing-role to the default ServiceAccount
-
-kubectl create rolebinding pod-listing-binding \
-  --role=pod-listing-role \
-  --serviceaccount=kafka:default \
-  --dry-run=client \
-  --namespace=kafka \
-  -o yaml > my-role-binding.yaml
-
-
-## Create a pod using the image giprocida/axual-debug:1.0 
-
+Create a pod named `debug-pod` that uses the giprocida/axual-debug:1.0 image and is set to be created in the `debezium-example` namespace:
 kubectl run debug-pod \
   --image=giprocida/axual-debug:1.0 \
   --namespace=kafka \
-  --dry-run=client -o yaml -- sleep 4000 > debug-pod.yaml
-
-## Modify the pod configuration by adding
-
-imagePullPolicy: Never 
-
-within the 'containers' field
-
-Apply all the newly created resources.
-
-
-The previously described procedure is automated through the use of the scripts: create-resources.sh and run-debug.sh.
-
-Run the script create-resource.sh to create all the necessary resources.
-Run the script run-debug.sh to apply all the newly created resources.
+  --dry-run=client -o yaml > printer.yaml
 
 
 
-## How to run it ##
+Now, modify the deployment configuration by adding `imagePullPolicy: Never` that will instruct the kubelet to never pull the container image from the registry. This means that Kubernetes will only use the image if it is already present on the node where the pod is scheduled. 
 
-Follow these steps:
+Apply the pod:
 
-
-## Build the docker image
-
-
-
-You could push the image to your Docker Hub or use the field imagePullPolicy: Never (image 
-already present locally).
+```
+kubectl apply -f printer.yaml
+```
 
 
-# Create a role resource named 'pod-listing-role' with specific permission
-
-kubectl create role pod-listing-role \
-  --verb=get,list \
-  --resource=pods,secrets \
-  --namespace=kafka \
-  --dry-run=client -o yaml > my-role.yaml
 
 
-## Create a rolebinding resource that binds the pod-listing-role to the default ServiceAccount
-
-kubectl create rolebinding pod-listing-binding \
-  --role=pod-listing-role \
-  --serviceaccount=kafka:default \
-  --dry-run=client \
-  --namespace=kafka \
-  -o yaml > my-role-binding.yaml
 
 
-## Create a pod using the image giprocida/axual-debug:1.0 
-
-kubectl run debug-pod \
-  --image=giprocida/axual-debug:1.0 \
-  --namespace=kafka \
-  --dry-run=client -o yaml -- sleep 4000 > debug-pod.yaml
-
-## Modify the pod configuration by adding
-
-imagePullPolicy: Never 
-
-within the 'containers' field
-
-Apply all the newly created resources.
-
-
-The previously described procedure is automated through the use of the scripts: create-resources.sh and run-debug.sh.
-
-Run the script create-resource.sh to create all the necessary resources.
-Run the script run-debug.sh to apply all the newly created resources.
 
