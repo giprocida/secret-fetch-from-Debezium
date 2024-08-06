@@ -45,14 +45,14 @@ Kubernetes files to deploy:
 
 3. A RoleBinding called `connector-configuration-role-binding` which binds the Role to the Kafka Connect cluster service account.
 
-4. A Deployment called `mysql` for deploying a MySQL database ( the deployment is defined in the `mysql-deployment.yaml` file)
+4. A Deployment called `mysql` for deploying a MySQL database specified in the `mysql-deployment.yaml` file
 
-5. A service called `mysql` ( the service is defined in the `mysql-deployment.file`)
+5. A service called `mysql` specified in the `mysql-deployment.file`
 
 
 Custom Resources using Strimzi Kafka CRD:
 
-1. Kafka which deploys the Kafka cluster (file called `debezium-cluster.yaml`)
+1. Kafka which deploys the Kafka cluster (`debezium-cluster.yaml`)
 
 2. KafkaConnect which deploys the Kafka Connect cluster with the necessary plugins (`debezium-connect-cluster-custombuild.yaml`)
 
@@ -65,7 +65,7 @@ Custom Resources using Strimzi Kafka CRD:
 **Issue with Shell Commands**: When creating the KafkaConnector using shell commands as suggested in the tutorial, you may encounter issues with reading database credentials. It is recommended to store the YAML configuration in a file and apply it using kubectl apply -f ..... For more information, refer to this Stack Overflow post for troubleshooting [KafkaConnector not reading database credentials](https://stackoverflow.com/questions/75831703/strimzi-kafkaconnector-not-reading-database-credentials-from-secrets).
 
 
-**Why two debezium-connect-cluster-files**: 
+**Why two debezium-connect-cluster files?**: 
 
 * `debezium-connect-cluster-custombuild.yaml`: Indicates that the configuration involves a custom build process and includes plugins.
 * `debezium-connect-cluster-prebuiltimage.yaml`: Indicates that the configuration uses a pre-built image without additional build steps or plugins.
