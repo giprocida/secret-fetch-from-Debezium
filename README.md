@@ -90,11 +90,13 @@ kubectl get crds | grep strimzi | awk '{print $1}' | xargs kubectl delete crd
 
 
 
-### Understanding the Interplay of ServiceAccounts, Roles, and RoleBindings in Kubernetes ###
+### Configuring Minikube's Docker Daemon and Managing Docker Images ###
 
+This sections provides a practical understanding of Kubernetes resources like `ServiceAccount`, `Role`, and `RoleBinding`. 
+Follow the steps to deploy the application:
 
 1. Configure your shell to use Minikube's Docker daemon. 
-Minikube has it own Docker daemon. To build Docker images directly within Minikube, you need to point your shell to 
+Minikube has its own Docker daemon. To build Docker images directly within Minikube, you need to point your shell to 
 Minikube's Docker daemon.
 Check the Docker environment for Minikube:
 ```
@@ -150,7 +152,9 @@ kubectl create role pod-listing-role \
 ```
 
 Or just use the provided `my-role.yaml` file. <br />
-The Role defined in the `my-role.yaml` file grants permissions to perform get and list operations on the pods and secrets resources within the `debezium-example` namespace. This means any ServiceAccount, User, or Group that this Role is bound to can view and list the pods and secrets in that namespace. Apply the Role:
+The Role defined in the `my-role.yaml` file grants permissions to perform get and list operations on the pods and secrets resources within the `debezium-example` namespace. This means any ServiceAccount, User, or Group that this Role is bound to can view and list the pods and secrets in that namespace.
+
+Apply the Role:
 ```
 kubectl apply -f my-role.yaml
 ```
