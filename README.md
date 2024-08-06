@@ -12,7 +12,7 @@ Before we start, let's first highlight some key differences between Kubernetes r
 * Minikube installed.
 * kubectl installed and configured to interact with both environments.
 
-### Minikube vs Kubernetes on Docker Desktop ###
+###  Minikube vs. Docker Desktop ###
 
 
 #### Minikube ####
