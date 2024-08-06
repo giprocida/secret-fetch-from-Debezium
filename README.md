@@ -2,7 +2,7 @@
 
 
 
-This project demonstrates how to easily deploy `Debezium` on Kubernetes using Minikube. Additionally, to provide a practical understanding of Kubernetes resources like ServiceAccount, Role, and RoleBinding, this project explains their purposes and showcases their functionality.
+This project demonstrates how to easily deploy `Debezium` and `Kafka` on Kubernetes using Minikube. Additionally, to provide a practical understanding of Kubernetes resources like ServiceAccount, Role, and RoleBinding, this project explains their purposes and showcases their functionality.
 
 The deployment, which utilizes the permissions defined in the `Role` object, prints all the containers for each pod and all the secrets from the `debezium-example` namespace where Debezium resides.
 Before we start, let's first highlight some key differences between Kubernetes running on Docker Desktop and Kubernetes running on Minikube.
@@ -62,29 +62,9 @@ Custom Resources using Strimzi Kafka CRD:
 
 
 #### Important Notes ####
-Issue with KafkaConnect configuration: When applying the configuration file from the [Debezium documentation](https://debezium.io/documentation/reference/stable/operations/kubernetes.html), you may encounter issues with the version field specified in the YAML file. To resolve this, update the version from 3.1.0 to 3.7.1, or alternatively, use the `debezium-connect-cluster.yaml` file directly.
+**Issue with KafkaConnect configuration**: When applying the configuration file from the [Debezium documentation](https://debezium.io/documentation/reference/stable/operations/kubernetes.html), you may encounter issues with the version field specified in the YAML file. To resolve this, update the version from 3.1.0 to 3.7.1, or alternatively, use the `debezium-connect-cluster.yaml` file directly.
 
-Issue with Shell Commands: When creating the KafkaConnector using shell commands as suggested in the tutorial, you may encounter issues with reading database credentials. It is recommended to store the YAML configuration in a file and apply it using kubectl apply -f ..... For more information, refer to this Stack Overflow post for troubleshooting [KafkaConnector not reaading database credentials](https://stackoverflow.com/questions/75831703/strimzi-kafkaconnector-not-reading-database-credentials-from-secrets).
-
-
-
-
-
-
-
-
-
-
-
-
-
-Follow this [Debezium documentation](https://debezium.io/documentation/reference/stable/operations/kubernetes.html) for deploying Debezium on Minikube in combinatior of the yaml files and other info written here. All the object resources that are used in the documentation are already in this repoo ready for use so you won t have to copy paste anything you will only need to replace the IP address present in the `debezium-kafka-connector.yaml` file with the IP address of the registry where you can push and pull. 
-
-
-ps: . This is because you will probably get into some issues when running creating the KafkaConnector using the shell (see Creating a Debezium Connector), you will probably run into some issues if are following the documentation . check here for more info 
-
-
-
+**Issue with Shell Commands**: When creating the KafkaConnector using shell commands as suggested in the tutorial, you may encounter issues with reading database credentials. It is recommended to store the YAML configuration in a file and apply it using kubectl apply -f ..... For more information, refer to this Stack Overflow post for troubleshooting [KafkaConnector not reading database credentials](https://stackoverflow.com/questions/75831703/strimzi-kafkaconnector-not-reading-database-credentials-from-secrets).
 
 
 
@@ -110,18 +90,10 @@ kubectl get crds | grep strimzi | awk '{print $1}' | xargs kubectl delete crd
 
 
 
+### Understanding the Interplay of ServiceAccounts, Roles, and RoleBindings in Kubernetes ###
 
 
-## Run the deployment on minikube ##
-
-Follow these steps:
-
-1. Start minikube:
-```
-minikube start
-```
-
-2. Configure your shell to use Minikube's Docker daemon. 
+1. Configure your shell to use Minikube's Docker daemon. 
 Minikube has it own Docker daemon. To build Docker images directly within Minikube, you need to point your shell to 
 Minikube's Docker daemon.
 Check the Docker environment for Minikube:
@@ -139,12 +111,12 @@ docker info | grep -i "name:"
 If the command returns `Name: minikube`, it confirms that the Docker daemon is running inside the Minikube VM.
 
 
-3. Build your Docker image. Navigate go to the directory containing your Dockerfile and build your image. using the provided Dockerfile:
+2. Build your Docker image. Navigate go to the directory containing your Dockerfile and build your image. using the provided Dockerfile:
 ```
-docker build -t gprocida6g/print-secrets:1.0 .
+docker build -t gprocida6g/printer:1.0 .
 ```
 
-4. Verify the Docker Image. After building the image, verify that it was built inside your Minikube environment by listing the images:
+3. Verify the Docker Image. After building the image, verify that it was built inside your Minikube environment by listing the images:
 
 ```
 docker images
@@ -165,7 +137,7 @@ docker rmi gprocida6g/objects-printer:1.0
 ```
 
 
-## Create a Role Resource ##
+**Create a Role Resource**
 
 Use an imperative command:
 
@@ -184,7 +156,7 @@ kubectl apply -f my-role.yaml
 ```
 
 
-## Create a Rolebinding resource ## 
+**Create a Rolebinding resource**
 
 Use an imperative command:
 
@@ -198,25 +170,27 @@ kubectl create rolebinding pod-listing-binding \
 ```
 
 or just use the provided `my-role-binding.yaml` file. <br />
-The RoleBinding defined in the file `my-role-binding.yaml` grants the permissions defined in the `pod-listing-role` Role to the default ServiceAccount in the debezium-example namespace. This means that the default ServiceAccount in the debezium-example namespace will have the permissions to get and list pods and secrets within that namespace. Apply the RoleBinding:
+The RoleBinding defined in the file `my-role-binding.yaml` grants the permissions defined in the `pod-listing-role` Role to the default ServiceAccount in the debezium-example namespace. This means that the default ServiceAccount in the debezium-example namespace will have the permissions to get and list pods and secrets within that namespace. 
+
+Apply the RoleBinding:
 ```
 kubectl apply -f my-role-binding.yaml
 ```
 
 
 
-## Create the deployment
+**Create the deployment**
 
 kubectl create deploy print-secrets \
   --image=gprocida6g/print-secrets:1.0 \
   --namespace=debezium-example\
   --dry-run=client -o yaml > print-secrets.yaml
 
-# Modify the pod configuration by adding
 
-imagePullPolicy: Never 
 
-within the 'containers' field
+Now, modify the deployment configuration by adding `imagePullPolicy: Never` that will instruct the kubelet to never pull the container image from the registry. This means that Kubernetes will only use the image if it is already present on the node where the pod is scheduled.
+
+
 
 
 
