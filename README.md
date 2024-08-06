@@ -187,11 +187,11 @@ kubectl apply -f my-role-binding.yaml
 
 **Create the pod**
 
-Create a pod named `debug-pod` that uses the giprocida/axual-debug:1.0 image and is set to be created in the `debezium-example` namespace:
+Create a pod named `debug-pod` that uses the gprocida6g/objects-printer:1.0 image and is set to be created in the `debezium-example` namespace:
 
 ```
 kubectl run debug-pod \
-  --image=giprocida/axual-debug:1.0 \
+  --image=gprocida6g/objects-printer:1.0 \
   --namespace=kafka \
   --dry-run=client -o yaml > printer.yaml
 ```
