@@ -90,8 +90,12 @@ kubectl get crds | grep strimzi | awk '{print $1}' | xargs kubectl delete crd
 
 ### Configuring Minikube's Docker Daemon and Managing Docker Images ###
 
-This sections provides a practical understanding of Kubernetes resources like `ServiceAccount`, `Role`, and `RoleBinding`. 
-Follow the steps:
+This section provides a practical understanding of Kubernetes resources, specifically `ServiceAccount`, `Role`, and `RoleBinding`. We will create three Kubernetes resources to demonstrate their usage:
+
+* RoleBinding: Grants the necessary permissions to the ServiceAccount.
+* Role: Defines the permissions for accessing resources.
+* Pod: Utilizes the ServiceAccount to operate within the defined permissions.
+Follow the steps below to learn more:
 
 1. Configure your shell to use Minikube's Docker daemon. 
 Minikube has its own Docker daemon. To build Docker images directly within Minikube, you need to point your shell to 
