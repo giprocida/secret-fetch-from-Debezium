@@ -2,7 +2,7 @@
 
 
 
-This project demonstrates how to easily deploy `Debezium` and `Kafka` on Kubernetes using Minikube.
+This project demonstrates how to deploy `Debezium` and `Kafka` on Kubernetes using Minikube.
 Before we start, let's first highlight some key differences between Kubernetes running on Docker Desktop and Kubernetes running on Minikube.
 
 ## Prerequisites ##
