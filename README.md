@@ -76,14 +76,6 @@ Custom Resources using Strimzi Kafka CRD:
 
 
 
-###
-
-kubectl get crds | grep strimzi | awk '{print $1}' | xargs kubectl delete crd
-
-###
-
-
-
 
 
 ### Understanding the Interplay of ServiceAccounts, Roles, and RoleBindings ###
