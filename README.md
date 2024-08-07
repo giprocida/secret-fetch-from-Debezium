@@ -86,9 +86,9 @@ kubectl get crds | grep strimzi | awk '{print $1}' | xargs kubectl delete crd
 
 
 
+### Understanding the Interplay of ServiceAccounts, Roles, and RoleBindings ###
 
-
-### Configuring Minikube's Docker Daemon and Managing Docker Images ###
+#### Configuring Minikube's Docker Daemon and Managing Docker Images ####
 
 This section provides a practical understanding of Kubernetes resources, specifically `ServiceAccount`, `Role`, and `RoleBinding`. We will create three Kubernetes resources to demonstrate their usage:
 
@@ -187,12 +187,12 @@ kubectl apply -f my-role-binding.yaml
 
 **Create the pod**
 
-Create a pod named `debug-pod` that uses the gprocida6g/objects-printer:1.0 image and is set to be created in the `debezium-example` namespace:
+Create a pod named `debug-pod` that uses the gprocida6g/printer:1.0 image and is set to be created in the `debezium-example` namespace:
 
 ```
 kubectl run debug-pod \
-  --image=gprocida6g/objects-printer:1.0 \
-  --namespace=kafka \
+  --image=gprocida6g/printer:1.0 \
+  --namespace=debezium-example \
   --dry-run=client -o yaml > printer.yaml
 ```
 
@@ -205,8 +205,7 @@ Apply the pod:
 kubectl apply -f printer.yaml
 ```
 
-
-
+Now, log into the pod and check the output. You will see all the secrets belonging to the debezium-example namespace printed out, along with all the containers for each pod.
 
 
 
