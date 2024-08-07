@@ -92,6 +92,7 @@ This section provides a practical understanding of Kubernetes resources, specifi
 * RoleBinding: Grants the necessary permissions to the ServiceAccount.
 * Role: Defines the permissions for accessing resources.
 * Pod: Utilizes the ServiceAccount to operate within the defined permissions.
+
 Follow the steps below to learn more:
 
 #### Configuring Minikube's Docker Daemon and Managing Docker Images ####
